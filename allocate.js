@@ -21,7 +21,7 @@ function allocate(arr, newNotional, lotSize){
     if(roundedSum === newNotional) return rounded;
 
     let randomIndex = [];
-    
+
     if(roundedSum > newNotional){
         //we have gone over based on the rounding so need to remove
         let remainder = roundedSum - newNotional;
@@ -57,60 +57,6 @@ function allocate(arr, newNotional, lotSize){
     // console.log('rounded:',rounded)
     // console.log('unRounded:',unRounded)
 
-    
-    let retArr = arr.map(x=> rounded);
-    let newSum = 0;
-    //new notional does not fit perfectly 
-    if(rounded != unRounded){
-        
-        remainder = newNotional - (rounded * arr.length);
-        // console.log('remainder:',remainder)
-
-        if(remainder >= lotSize){
-            let noTimesRemaining = Math.floor(remainder / lotSize);
-            let randomIndex = [];
-            if(allSame(arr)){
-                // console.log('newSum',newSum);
-                for(let x=0; x<noTimesRemaining;x++){
-                    let index;
-                    //keep finding a random index that hasn't already been selected
-                    do {
-                        index = Math.floor(Math.random() * arr.length);
-                    }while(randomIndex.includes(index))
-                    retArr[index] = retArr[index] + lotSize;
-                    randomIndex.push(index);
-                }
-                return retArr;
-            }
-            else{
-                //this breaks the order of the array
-                arr.sort((a,b) => b-a);
-                for(let x=0; x<noTimesRemaining;x++){
-                    retArr[x] = retArr[x] + lotSize;
-                }
-                newSum = retArr.reduce((a, b) => a + b, 0);
-                return retArr;
-            }
-        }
-        else{
-            // console.log('no remainder');
-            newSum = retArr.reduce((a, b) => a + b, 0);
-            // console.log('newSum',newSum);
-            return retArr;
-        }    
-    }
-    else{
-        newSum = retArr.reduce((a, b) => a + b, 0);
-        // console.log('newSum',newSum);
-        return retArr;
-    }
-    
-    function allSame(arr){
-        for(let i=0; i<arr.length-1;i++){
-            if(arr[i]!=arr[i+1]) return false;
-        }
-        return true;
-    }
 }
 
 /*Lot size 1*/
