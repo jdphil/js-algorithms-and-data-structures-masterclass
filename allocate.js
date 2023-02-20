@@ -53,10 +53,6 @@ function allocate(arr, newNotional, lotSize){
         }
         return rounded;
     }
-    // console.log('newNotional:',newNotional)
-    // console.log('rounded:',rounded)
-    // console.log('unRounded:',unRounded)
-
 }
 
 /*Lot size 1*/
