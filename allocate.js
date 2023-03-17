@@ -7,12 +7,13 @@ function allocate(arr, newNotional, lotSize){
     if(newNotional<lotSize) return arr;
 
     //new notional must be a multiple of lot size
+    //need to consider how we handle this for percentage values - where to validate
     if(newNotional % lotSize !=0) return arr;
 
-    //simple division
+    //straight line proportional division
     let unRounded = arr.map(qty=>(qty/sum)*newNotional)
 
-    //round up to lotSize
+    //mid round to lotSize
     let rounded = unRounded.map(x=>Math.round(x/lotSize)*lotSize);
 
     let roundedSum = rounded.reduce((a, b) => a + b, 0);
@@ -22,6 +23,7 @@ function allocate(arr, newNotional, lotSize){
 
     let randomIndex = [];
 
+    //should refactor the next two if statements - DRY
     if(roundedSum > newNotional){
         //we have gone over based on the rounding so need to remove
         let remainder = roundedSum - newNotional;
@@ -57,35 +59,41 @@ function allocate(arr, newNotional, lotSize){
 
 /*Lot size 1*/
 //greater than allowed
-console.log('greater than allowed',allocate([2000000,2000000,2000000], 7000000, 1));
-//all the same
-console.log('all the same',allocate([2000000,2000000,2000000], 2000000, 1));
-//not all the same
-console.log('NOT all the same',allocate([2000000,1500000,3000000], 2000000, 1));
-//prefect fit
-console.log('prefect fit',allocate([2000000,2000000,2000000], 3000000, 1));
-//small new notional
-console.log('small new notional',allocate([2000000,2000000,2000000], 1, 1));
-//percentage
-console.log('percentage',allocate([2000000,2000000,2000000], 6000000*0.33333333, 1));
+// console.log('greater than allowed',allocate([2000000,2000000,2000000], 7000000, 1));
+// //all the same
+// console.log('all the same',allocate([2000000,2000000,2000000], 2000000, 1));
+// //not all the same
+// console.log('NOT all the same',allocate([2000000,1500000,3000000], 2000000, 1));
+// //prefect fit
+// console.log('prefect fit',allocate([2000000,2000000,2000000], 3000000, 1));
+// //small new notional
+// console.log('small new notional',allocate([2000000,2000000,2000000], 1, 1));
+// //percentage
+// console.log('percentage',allocate([2000000,2000000,2000000], 6000000*0.33333333, 1));
+
+// console.log('4.5m',allocate([1000000,2000000,1500000], Math.round(4500000*0.33333333), 1));
+
+// console.log('Two large one small',allocate([10000000,40000000,1000000], Math.round(4500000*0.33333333), 1));
+
+console.log('Two large one small - 1m 50k lot',allocate([10000000,40000000,1000000], 1000000, 50000));
 
 
-/*Lot size 50000*/
-//greater than allowed
-console.log('greater than allowed',allocate([2000000,2000000,2000000], 7000000, 50000));
-//all the same
-console.log('all the same',allocate([2000000,2000000,2000000], 2000000, 50000));
-//not all the same
-console.log('NOT all the same',allocate([2000000,1500000,3000000], 2000000, 50000));
-//prefect fit
-console.log('prefect fit',allocate([2000000,2000000,2000000], 3000000, 50000));
+// /*Lot size 50000*/
+// //greater than allowed
+// console.log('greater than allowed',allocate([2000000,2000000,2000000], 7000000, 50000));
+// //all the same
+// console.log('all the same',allocate([2000000,2000000,2000000], 2000000, 50000));
+// //not all the same
+// console.log('NOT all the same',allocate([2000000,1500000,3000000], 2000000, 50000));
+// //prefect fit
+// console.log('prefect fit',allocate([2000000,2000000,2000000], 3000000, 50000));
 
-//small new notional
-console.log('small new notional',allocate([2000000,2000000,2000000], 50000, 50000));
+// //small new notional
+// console.log('small new notional',allocate([2000000,2000000,2000000], 50000, 50000));
 
 
-//small new notional
-console.log('small new notional',allocate([2000000,2000000,2000000], 100000, 50000));
+// //small new notional
+// console.log('small new notional',allocate([2000000,2000000,2000000], 100000, 50000));
 
-//small new notional
-console.log('small new notional',allocate([2000000,1000000,3000000], 125000, 50000));
+// //small new notional
+// console.log('small new notional',allocate([2000000,1000000,3000000], 125000, 50000));
