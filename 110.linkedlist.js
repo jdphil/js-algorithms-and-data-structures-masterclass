@@ -33,11 +33,31 @@ class SinglyLinkedList{
         else{
             this.tail.next = newNode;
             this.tail = newNode;
-            this.length++;     
         }
+        this.length++;     
         return this;
     }
     pop(){
         if(this.length===0) return undefined;
+        var current = this.head;
+        var newTail = current;
+        while(current.next){
+            newTail = current;
+            current = current.next;
+        }
+        this.tail = newTail;
+        this.tail.next = null;
+        this.length--;
+        if(this.length===0){
+            this.head = null;
+            this.tail = null;
+        }
+        return current;
     }
 }
+
+var list = new SinglyLinkedList();
+list.push("HELLO");
+list.push("GOODBYE");
+list.push("!");
+console.log(list)
