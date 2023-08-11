@@ -23,3 +23,26 @@
 //tress
 //binary trees
 //binary search trees 
+
+//what are trees used for? 
+//html dom - parent / child elements - DOM 
+//network routing 
+//abstract syntax language 
+//ai - tick tack tow
+//computer files as a tree structure
+//json is a tree structure
+
+//binary search trees - bst - ordered numbers (could be strings) 
+//every number less than the parent is to left
+//number gt parent to right 
+
+
+//******************************* */
+
+//How BSTS work
+/*
+*Every parent node has at most two children - hence binary 
+*Every node to the left of a parent node is always less than the parent 
+*Every node to the right of a parent node is always greater than the parent 
+This helps us to find and search faster
+*/
