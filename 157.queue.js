@@ -37,3 +37,9 @@ class Queue {
     }
 }
 
+var q = new Queue();
+q.enqueue("FIRST")
+q.enqueue("2nd")
+q.enqueue("3rd")
+
+q.dequeue();
