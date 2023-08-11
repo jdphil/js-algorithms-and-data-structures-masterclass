@@ -21,7 +21,7 @@ class BinarySearchTree {
         var currentNode = this.root;
         while (true){
             if(value === currentNode.value) return undefined;
-            
+
             if (value > currentNode.value) {
                 if (currentNode.right) {
                     currentNode = currentNode.right;
@@ -43,6 +43,35 @@ class BinarySearchTree {
             }
         }
 
+    }
+    find(value){
+
+        if(this.root === null) return false;
+        
+        if(this.root && this.root.value === value) return true;
+
+        var currentNode = this.root;
+        while(true){
+            if(value === currentNode.value) return true;
+
+            if (value > currentNode.value) {
+                if (currentNode.right) {
+                    currentNode = currentNode.right;
+                }
+                else {
+                    return false;
+                }
+            }
+    
+            if (value < currentNode.value) {
+                if (currentNode.left) {
+                    currentNode = currentNode.left;
+                }
+                else {
+                    return false;
+                }
+            }
+        }
     }
 }
 
