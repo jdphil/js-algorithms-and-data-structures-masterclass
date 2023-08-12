@@ -73,15 +73,81 @@ class BinarySearchTree {
             }
         }
     }
+    bfs(){
+        var queue = [];
+        var visited = [];
+        var deque = this.root;
+        queue.push(this.root);
+        while(queue.length>0){
+            console.log(queue);
+            deque = queue.shift()
+            visited.push(deque.value);
+            console.log(visited);
+            if(deque.left){
+                queue.push(deque.left)
+            }
+
+            if(deque.right){
+                queue.push(deque.right);
+            }
+        }
+
+
+        return visited;
+    }
+    dfs_preorder(){
+        var vistied = [];
+        var current = this.root;
+
+        function traverse(node){
+            vistied.push(node.value);
+            if(node.left){
+                traverse(node.left)
+            }
+    
+            if(node.right){
+                traverse(node.right)
+            }
+        }
+        traverse(current);
+        return vistied;
+    }
+    dfs_postorder(){
+        var vistied = [];
+
+        function traverse(node){
+            
+            if(node.left) traverse(node.left);
+            if(node.right) traverse(node.right);
+            vistied.push(node.value);
+        }
+        traverse(this.root);
+        return vistied;
+    }
+    dfs_inorder(){
+        var vistied = [];
+
+        function traverse(node){
+            
+            if(node.left) traverse(node.left);
+            vistied.push(node.value);
+            if(node.right) traverse(node.right);
+            
+        }
+        traverse(this.root);
+        return vistied;
+
+
+    }
 }
 
 
 var tree = new BinarySearchTree();
 tree.insert(10)
-tree.insert(5)
-tree.insert(13)
-tree.insert(11)
-tree.insert(2)
-tree.insert(16)
-tree.insert(7)
+tree.insert(6)
+tree.insert(15)
+tree.insert(3)
+tree.insert(8)
+tree.insert(20)
+tree.dfs_preorder();
 tree.insert(8)
