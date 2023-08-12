@@ -37,25 +37,77 @@ class MaxBinaryHeap{
         this.values.push(value);
         var index = this.values.length-1;
         var parentIndex = findParent(index);
-        
-        while (index > 1 && this.values[parentIndex] < this.values[index]){
+        const element = this.values[index];
+        while (index > 0){
             var parentIndex = findParent(index);
             //swap
-            this.values[index] = this.values[parentIndex];
-            this.values[parentIndex] = value;
+            let parent = this.values[parentIndex];
+            if(element <= parent) break;
+            this.values[parentIndex] = element;
+            this.values[index] = parent
             //update i 
             index = parentIndex;
         }
         return this.values;
     }
+    extractMax(){
+        //
+        var first = this.values[0];
+        this.values[0] = this.values[this.values.length-1];
+        this.values[this.values.length-1] = first;
+        var removed = this.values.pop();
+
+        function findChildLeft(index){
+            return ((2*index)+1);
+        }
+        
+        function findChildRight(index){
+            return ((2*index)+2);
+        }
+
+        var parentIndex = 0;
+        var leftChild = findChildLeft(parentIndex);
+        var rightChild = findChildRight(parentIndex);
+        const element = this.values[parentIndex];
+
+        while(true){
+            var gtLeft = false;
+            var gtRight = false;
+            if(this.values[leftChild] > element) gtLeft = true;
+            if(this.values[rightChild] > element) gtRight = true;
+            var swapIndex;
+            if(gtLeft && gtRight){
+                if (this.values[leftChild]  > this.values[rightChild]){
+                    swapIndex = leftChild;
+                }else{
+                    swapIndex = rightChild;
+                }
+            }
+            else{
+                if(gtLeft) swapIndex = leftChild;
+                if(gtRight) swapIndex = rightChild;
+            }
+
+            if(gtLeft || gtRight){   
+                //swap
+                var temp = this.values[swapIndex];
+                this.values[parentIndex] = temp;
+                this.values[swapIndex] = element;
+                parentIndex = swapIndex;
+            }
+            else{
+                break;
+            }
+        }
+        return removed;
+    }
 }
 
 var mbh = new MaxBinaryHeap();
-mbh.insert(100);
-mbh.insert(10);
-mbh.insert(7);
-mbh.insert(65);
-mbh.insert(23);
-mbh.insert(16);
-mbh.insert(22);
+mbh.insert(39);
+mbh.insert(41);
+mbh.insert(18);
+mbh.insert(27);
+mbh.insert(12);
+console.log(mbh.values);
 
