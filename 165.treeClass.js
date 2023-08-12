@@ -1,3 +1,23 @@
+//bfs - dfs? :) 
+/*
+which is better?
+
+depends on the tree
+
+wide - bfs stores nodes in memory in the queue 
+deep - dfs does not 
+
+so a lot of child nodes bfs would consume a lot of memory 
+simple tree structures bfs might be better (one sided tree) but then why use a tree? 
+
+when for different dfs? 
+pre, post in.... 
+
+dfs in order when you use inorder on a bst - the nodes are in order - could be useful
+pre order - duplicate a tree - store it in a file and load it in 
+
+*/
+
 class Node {
     constructor(value) {
         this.value = value;
@@ -151,3 +171,5 @@ tree.insert(8)
 tree.insert(20)
 tree.dfs_preorder();
 tree.insert(8)
+
+
