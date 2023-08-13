@@ -50,13 +50,13 @@ class MaxBinaryHeap{
         }
         return this.values;
     }
-    extractMax(){
-        //
-        var first = this.values[0];
-        this.values[0] = this.values[this.values.length-1];
-        this.values[this.values.length-1] = first;
-        var removed = this.values.pop();
+    sinkDown(){
+        let idx = 0;
+        const length = this.values.length;
+        const element = this.values[0];
 
+        while(true){
+            
         function findChildLeft(index){
             return ((2*index)+1);
         }
@@ -64,42 +64,18 @@ class MaxBinaryHeap{
         function findChildRight(index){
             return ((2*index)+2);
         }
-
-        var parentIndex = 0;
-        var leftChild = findChildLeft(parentIndex);
-        var rightChild = findChildRight(parentIndex);
-        const element = this.values[parentIndex];
-
-        while(true){
-            var gtLeft = false;
-            var gtRight = false;
-            if(this.values[leftChild] > element) gtLeft = true;
-            if(this.values[rightChild] > element) gtRight = true;
-            var swapIndex;
-            if(gtLeft && gtRight){
-                if (this.values[leftChild]  > this.values[rightChild]){
-                    swapIndex = leftChild;
-                }else{
-                    swapIndex = rightChild;
-                }
-            }
-            else{
-                if(gtLeft) swapIndex = leftChild;
-                if(gtRight) swapIndex = rightChild;
-            }
-
-            if(gtLeft || gtRight){   
-                //swap
-                var temp = this.values[swapIndex];
-                this.values[parentIndex] = temp;
-                this.values[swapIndex] = element;
-                parentIndex = swapIndex;
-            }
-            else{
-                break;
-            }
         }
-        return removed;
+    }
+    extractMax(){
+        //
+        var max = this.values[0];
+        var end = this.values.pop();
+        this.values[0] = end;
+        this.sinkDown();
+        return max;
+        
+
+
     }
 }
 
