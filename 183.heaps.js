@@ -25,24 +25,24 @@ can also find parent from child
 n-1/2 floored
 */
 
-class MaxBinaryHeap{
-    constructor(){
+class MaxBinaryHeap {
+    constructor() {
         this.values = [];
     }
-    insert(value){
-        function findParent(index){
-            return Math.floor((index-1)/2);
+    insert(value) {
+        function findParent(index) {
+            return Math.floor((index - 1) / 2);
         }
 
         this.values.push(value);
-        var index = this.values.length-1;
+        var index = this.values.length - 1;
         var parentIndex = findParent(index);
         const element = this.values[index];
-        while (index > 0){
+        while (index > 0) {
             var parentIndex = findParent(index);
             //swap
             let parent = this.values[parentIndex];
-            if(element <= parent) break;
+            if (element <= parent) break;
             this.values[parentIndex] = element;
             this.values[index] = parent
             //update i 
@@ -50,40 +50,60 @@ class MaxBinaryHeap{
         }
         return this.values;
     }
-    sinkDown(){
+    sinkDown() {
         let idx = 0;
         const length = this.values.length;
         const element = this.values[0];
 
-        while(true){
-            
-        function findChildLeft(index){
-            return ((2*index)+1);
-        }
-        
-        function findChildRight(index){
-            return ((2*index)+2);
-        }
+        while (true) {
+            let leftChildIdx = ((2 * idx) + 1);
+            let rightChildIdx = ((2 * idx) + 2);
+            let leftChild, rightChild;
+            let swap = null;
+
+            if(leftChildIdx < length){
+                leftChild = this.values[leftChildIdx];
+                if(leftChild > element){
+                    swap = leftChildIdx;
+                }
+            }
+
+            if(rightChildIdx < length){
+                rightChild = this.values[rightChildIdx];
+                if(
+                    (swap === null && rightChild > element) ||
+                    (swap !== null && rightChild > leftChild)
+                 ) {
+                    swap = rightChildIdx;
+                }
+            }
+
+            if(swap === null) break;
+            this.values[idx] = this.values[swap];
+            this.values[swap] = element;
+            idx = swap;
         }
     }
-    extractMax(){
-        //
+    extractMax() {
+        if(this.values.length === 1) return this.values.pop();
         var max = this.values[0];
         var end = this.values.pop();
         this.values[0] = end;
         this.sinkDown();
         return max;
-        
+
 
 
     }
 }
 
 var mbh = new MaxBinaryHeap();
-mbh.insert(39);
 mbh.insert(41);
+mbh.insert(39);
+mbh.insert(33);
 mbh.insert(18);
 mbh.insert(27);
 mbh.insert(12);
+mbh.insert(55);
 console.log(mbh.values);
 
