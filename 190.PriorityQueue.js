@@ -25,16 +25,24 @@ can also find parent from child
 n-1/2 floored
 */
 
-class MaxBinaryHeap {
+class Node{
+    constructor(value, priority){
+        this.value = value;
+        this.priority = priority;
+    }
+}
+
+class PriorityQueue {
     constructor() {
         this.values = [];
     }
-    enqueue(value) {
+    enqueue(value, priority) {
+        let newNode = new Node(value, priority);
         function findParent(index) {
             return Math.floor((index - 1) / 2);
         }
 
-        this.values.push(value);
+        this.values.push(newNode);
         var index = this.values.length - 1;
         var parentIndex = findParent(index);
         const element = this.values[index];
@@ -42,7 +50,7 @@ class MaxBinaryHeap {
             var parentIndex = findParent(index);
             //swap
             let parent = this.values[parentIndex];
-            if (element <= parent) break;
+            if (element.priority <= parent.priority) break;
             this.values[parentIndex] = element;
             this.values[index] = parent
             //update i 
@@ -63,7 +71,7 @@ class MaxBinaryHeap {
 
             if(leftChildIdx < length){
                 leftChild = this.values[leftChildIdx];
-                if(leftChild > element){
+                if(leftChild.priority > element.priority){
                     swap = leftChildIdx;
                 }
             }
@@ -71,8 +79,8 @@ class MaxBinaryHeap {
             if(rightChildIdx < length){
                 rightChild = this.values[rightChildIdx];
                 if(
-                    (swap === null && rightChild > element) ||
-                    (swap !== null && rightChild > leftChild)
+                    (swap === null && rightChild.priority > element.priority) ||
+                    (swap !== null && rightChild.priority > leftChild.priority)
                  ) {
                     swap = rightChildIdx;
                 }
@@ -84,7 +92,7 @@ class MaxBinaryHeap {
             idx = swap;
         }
     }
-    extractMax() {
+    dequeue() {
         if(this.values.length === 1) return this.values.pop();
         var max = this.values[0];
         var end = this.values.pop();
@@ -97,13 +105,18 @@ class MaxBinaryHeap {
     }
 }
 
-var pq = new MaxBinaryHeap();
-pq.enqueue(41);
-pq.enqueue(39);
-pq.enqueue(33);
-pq.enqueue(18);
-pq.enqueue(27);
-pq.enqueue(12);
-pq.enqueue(55);
+var pq = new PriorityQueue();
+pq.enqueue("flu", 2);
+pq.enqueue("gunshot",5);
+pq.enqueue("cut finger",4);
+pq.enqueue("broken wrist",3);
+pq.enqueue("flu", 2);
+pq.enqueue("gunshot",5);
+pq.enqueue("cut finger",4);
+pq.enqueue("broken wrist",3);
+pq.enqueue("flu", 2);
+pq.enqueue("gunshot",5);
+pq.enqueue("cut finger",4);
+pq.enqueue("broken wrist",3);
 console.log(pq.values);
 
