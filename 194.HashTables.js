@@ -28,7 +28,7 @@ what makes a good hash?
 */
 
 class HashTable {
-    constructor(size=53){
+    constructor(size=4){
         this.keyMap = new Array(size);
     }
 
@@ -43,31 +43,67 @@ class HashTable {
         return total;
     }
     set(key, value){
-        let hashed = this._hash(key);
-        if(this.keyMap[hashed]){
-            this.keyMap.push([key,value]);
+        let index = this._hash(key);
+        if(!this.keyMap[index]){
+            this.keyMap[index] = [];
         }
-        else{
-            this.keyMap[hashed] = [[key,value]];
-        }
+        this.keyMap[index].push([key,value]);
     }
     get(key){
-        let hashed = this._hash(key);
-        if(this.keyMap[hashed]){
+        let index = this._hash(key);
+        console.log(index);
+        if(this.keyMap[index]){
             //loop though array and look at
-            for(let i=0; i<this.keyMap[hashed].length; i++){
-                if(this.keyMap[hashed][i][0] === key){
-                    return this.keyMap[hashed][i][1];
+            for(let i=0; i<this.keyMap[index].length; i++){
+                if(this.keyMap[index][i][0] === key){
+                    return this.keyMap[index][i];
                 }
             }
         }else{
             return undefined;
         }
     }
+    keys(){
+        let keysArr = [];
+        for(let i=0; i<this.keyMap.length;i++){
+            if(this.keyMap[i]){
+                //console.log(this.keyMap[i]);
+                for(let j=0; j< this.keyMap[i].length; j++){
+                    if(!keysArr.includes(this.keyMap[i][j][0])){
+                        keysArr.push(this.keyMap[i][j][0]);
+                    }
+                }
+            }
+        }
+        return keysArr;
+    }
+    
+    values(){
+        let valuesArr = [];
+        for(let i=0; i<this.keyMap.length;i++){
+            if(this.keyMap[i]){
+                //console.log(this.keyMap[i]);
+                for(let j=0; j< this.keyMap[i].length; j++){
+                    if(!valuesArr.includes(this.keyMap[i][j][1])){
+                        valuesArr.push(this.keyMap[i][j][1]);
+                    }
+                }
+            }
+        }
+        return valuesArr;
+    }
 }
 
-let ht = new HashTable(50);
+let ht = new HashTable(17);
 ht.set("pink", 10)
-ht.set("oranaged", 10)
-ht.set("cyan", 10)
+ht.set("oranaged", 6)
+ht.set("cyan", 7)
+ht.set("jonathan", 39)
+ht.set("courtney", 38)
+ht.set("wilbur", 7)
+ht.set("francesca", 4)
+ht.set("henry", 4)
+ht.set("francesca", 4)
+ht.set("francesca", 4)
+ht.set("jonathan", 39)
 console.log();
