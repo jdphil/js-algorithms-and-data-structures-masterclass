@@ -27,18 +27,47 @@ what makes a good hash?
 3. deterministic - same output for same input 
 */
 
-function hash (key, arrayLen) {
-    let total = 0;
-    const WEIRD_PRIME = 8191;
-    for (let i=0; i <Math.min(key.length, 100); i++){
-        let char = key[i];
-        let value = char.charCodeAt(0) - 96;
-        total = (total * WEIRD_PRIME + value) % arrayLen;
+class HashTable {
+    constructor(size=53){
+        this.keyMap = new Array(size);
     }
-    return total;
+
+    _hash(key){
+        let total = 0;
+        const WEIRD_PRIME = 31;
+        for (let i=0; i <Math.min(key.length, 100); i++){
+            let char = key[i];
+            let value = char.charCodeAt(0) - 96;
+            total = (total * WEIRD_PRIME + value) % this.keyMap.length;
+        }
+        return total;
+    }
+    set(key, value){
+        let hashed = this._hash(key);
+        if(this.keyMap[hashed]){
+            this.keyMap.push([key,value]);
+        }
+        else{
+            this.keyMap[hashed] = [[key,value]];
+        }
+    }
+    get(key){
+        let hashed = this._hash(key);
+        if(this.keyMap[hashed]){
+            //loop though array and look at
+            for(let i=0; i<this.keyMap[hashed].length; i++){
+                if(this.keyMap[hashed][i][0] === key){
+                    return this.keyMap[hashed][i][1];
+                }
+            }
+        }else{
+            return undefined;
+        }
+    }
 }
 
-hash("pink", 10)
-hash("oranaged", 10)
-hash("cyan", 10)
+let ht = new HashTable(50);
+ht.set("pink", 10)
+ht.set("oranaged", 10)
+ht.set("cyan", 10)
 console.log();
