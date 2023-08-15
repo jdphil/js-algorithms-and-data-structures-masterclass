@@ -106,17 +106,11 @@ class PriorityQueue {
 }
 
 var pq = new PriorityQueue();
-pq.enqueue("flu", 2);
-pq.enqueue("gunshot",5);
-pq.enqueue("cut finger",4);
-pq.enqueue("broken wrist",3);
-pq.enqueue("flu", 2);
-pq.enqueue("gunshot",5);
-pq.enqueue("cut finger",4);
-pq.enqueue("broken wrist",3);
-pq.enqueue("flu", 2);
-pq.enqueue("gunshot",5);
-pq.enqueue("cut finger",4);
-pq.enqueue("broken wrist",3);
+pq.enqueue("common cold", 5);
+pq.enqueue("gunshot wound",1);
+pq.enqueue("high fever",4);
+pq.enqueue("broken arm",2);
+pq.enqueue("glass in fooot",3);
 console.log(pq.values);
 
+//no guaranteed order between siblings
