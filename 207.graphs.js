@@ -34,24 +34,17 @@ class Graph {
         this.adjacencyList[v1].push(v2);
         this.adjacencyList[v2].push(v1);
     }
-    removeEdge(v1, v2){
+    removeEdge(vertex1, vertex2){
         //v1
-        let temp1 = this.adjacencyList[v1];
-        for(let i=0;i<temp1.length;i++){
-            if(temp1[i]===v2){
-                temp1.pop();
-            }
-        }
-        this.adjacencyList[v2] = temp1;
+        this.adjacencyList[vertex1] = this.adjacencyList[vertex1].filter(
+            v => v !== vertex2
+        );
 
         //v2
-        let temp2 = this.adjacencyList[v2];
-        for(let i=0;i<temp1.length;i++){
-            if(temp2[i]===v1){
-                temp2.pop();
-            }
-        }
-        this.adjacencyList[v2] = temp2;
+        this.adjacencyList[vertex2] = this.adjacencyList[vertex2].filter(
+            v => v !== vertex1
+        );
+
     }
 }
 
