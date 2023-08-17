@@ -24,17 +24,17 @@ Compare traversal
 */
 
 class Graph {
-    constructor(){
+    constructor() {
         this.adjacencyList = {};
     }
-    addVertex(vertex){
+    addVertex(vertex) {
         if (!this.adjacencyList[vertex]) this.adjacencyList[vertex] = [];// need to handle dupes 
     }
-    addEdge(v1, v2){
+    addEdge(v1, v2) {
         this.adjacencyList[v1].push(v2);
         this.adjacencyList[v2].push(v1);
     }
-    removeEdge(vertex1, vertex2){
+    removeEdge(vertex1, vertex2) {
         //v1
         this.adjacencyList[vertex1] = this.adjacencyList[vertex1].filter(
             v => v !== vertex2
@@ -46,14 +46,39 @@ class Graph {
         );
 
     }
+    removeVertex(vertex) {
+        this.adjacencyList[vertex].forEach(v => {
+            this.removeEdge(vertex, v);
+        });
+        delete this.adjacencyList[vertex];
+    }
+    DFS(vertex){
+        
+        let visited = [];
+        console.log(visited);
+        visited.push(vertex);
+        
+        function helper(vertex){
+            if(!this.adjacencyList[vertex]) return;
+            this.adjacencyList[vertex].forEach(v => {
+                if(!visited.includes(v)){
+                    this.helper(v);
+                }
+            });
+        }
+        return visited;
+    }
 }
+
 
 let g = new Graph();
 g.addVertex("Aspen")
 g.addVertex("Tokyo")
 g.addVertex("Dallas")
-g.addEdge("Dallas","Tokyo")
-g.addEdge("Aspen","Dallas")
+g.addEdge("Dallas", "Tokyo")
+g.addEdge("Aspen", "Dallas")
+g.addEdge("Aspen", "Tokyo")
 console.log(g)
-g.removeEdge("Dallas","Tokyo")
+g.DFS("Aspen");
+g.removeVertex("Dallas")
 console.log(g)
