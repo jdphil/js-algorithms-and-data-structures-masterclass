@@ -52,33 +52,97 @@ class Graph {
         });
         delete this.adjacencyList[vertex];
     }
-    DFS(vertex){
-        
-        let visited = [];
+    depthFirstRecursive(start){
+        const result = [];
+        let visited = {};
         console.log(visited);
-        visited.push(vertex);
+
+        let adjacencyList = this.adjacencyList;
         
-        function helper(vertex){
-            if(!this.adjacencyList[vertex]) return;
-            this.adjacencyList[vertex].forEach(v => {
-                if(!visited.includes(v)){
-                    this.helper(v);
+        (function dfs(vertex){
+            if(!vertex) return null;
+            visited[vertex] = true;
+            result.push(vertex);
+            adjacencyList[vertex].forEach(v => {
+                if(!visited[v]){
+                    return dfs(v);
+                }
+            });
+        })(start);
+        return result;
+    }
+    depthFirstIterative(start){
+        const stack = [start];
+        const result = [];
+        const visited = {};
+        visited[start] = true;
+        let currentVertex;
+        while(stack.length){
+            currentVertex = stack.pop();
+            result.push(currentVertex);
+
+            this.adjacencyList[currentVertex].forEach(neighbor => {
+                if(!visited[neighbor]){
+                    visited[neighbor] = true;
+                    stack.push(neighbor);
                 }
             });
         }
-        return visited;
+        return result;
+    }
+    breathFirst(start){
+        const queue = [start];
+        const result = [];
+        const visited = {};
+        visited[start] = true;
+        let currentVertex;
+        while(queue.length){
+            currentVertex = queue.shift();
+            result.push(currentVertex);
+
+            this.adjacencyList[currentVertex].forEach(neighbor => {
+                if(!visited[neighbor]){
+                    visited[neighbor] = true;
+                    queue.push(neighbor);
+                }
+            });
+        }
+        return result;
     }
 }
 
 
 let g = new Graph();
-g.addVertex("Aspen")
-g.addVertex("Tokyo")
-g.addVertex("Dallas")
-g.addEdge("Dallas", "Tokyo")
-g.addEdge("Aspen", "Dallas")
-g.addEdge("Aspen", "Tokyo")
+g.addVertex("A")
+g.addVertex("B")
+g.addVertex("C")
+g.addVertex("D")
+g.addVertex("E")
+g.addVertex("F")
+
+g.addEdge("A", "B")
+g.addEdge("A", "C")
+g.addEdge("B", "D")
+g.addEdge("C", "E")
+g.addEdge("D", "E")
+g.addEdge("D", "F")
+g.addEdge("E", "F")
+
+
+/*
+
+              A
+            /   \
+           B     C
+           |     |
+           D-----E 
+           \     /
+              F
+
+*/
+
 console.log(g)
-g.DFS("Aspen");
+g.depthFirstRecursive("Aspen");
+g.depthFirstRecursive("Aspen");
 g.removeVertex("Dallas")
 console.log(g)
